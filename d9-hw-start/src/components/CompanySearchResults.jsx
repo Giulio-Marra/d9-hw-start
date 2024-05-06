@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Job from "./Job";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux"; // Importa useDispatch
 
 const CompanySearchResults = () => {
-  const dispatch = useDispatch();
-  const { company } = useSelector((state) => state.searchWork);
-  const companySelected = useSelector((state) => state.companySelected.content);
-
   const [jobs, setJobs] = useState([]);
+  const params = useParams();
+  const dispatch = useDispatch();
 
   const baseEndpoint =
     "https://strive-benchmark.herokuapp.com/api/jobs?company=";
 
   useEffect(() => {
     getJobs();
-  }, [company]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getJobs = async () => {
     try {
-      const response = await fetch(baseEndpoint + company);
+      const response = await fetch(baseEndpoint + params.company);
       if (response.ok) {
         const { data } = await response.json();
         setJobs(data);
@@ -36,11 +35,12 @@ const CompanySearchResults = () => {
     <Container>
       <Row>
         <Col className="my-3">
-          <h1 className="display-4">Job posting for: {company}</h1>
+          <h1 className="display-4">Job posting for: {params.company}</h1>
           <Button
             color="primary"
             onClick={() => {
-              dispatch({ type: "ADD_TO_PREF", payload: companySelected });
+              // Dispatch action to add company to favorites
+              dispatch({ type: "ADD_TO_PREF", payload: params.company });
             }}
           >
             ADD TO PREF
