@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Favourites = () => {
   const companies = useSelector((state) => state.companySelected.content);
@@ -9,7 +10,9 @@ const Favourites = () => {
       <h2>Favourite Companies</h2>
       <ul>
         {companies.map((company, index) => (
-          <li key={index}>{company}</li>
+          <li key={index}>
+            <Link to={`/${company}`}>{company}</Link>
+          </li>
         ))}
       </ul>
     </div>

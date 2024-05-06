@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Job from "./Job";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux"; // Importa useDispatch
+import { useDispatch } from "react-redux";
 
 const CompanySearchResults = () => {
   const [jobs, setJobs] = useState([]);
@@ -14,8 +14,7 @@ const CompanySearchResults = () => {
 
   useEffect(() => {
     getJobs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params.company]);
 
   const getJobs = async () => {
     try {
@@ -39,7 +38,6 @@ const CompanySearchResults = () => {
           <Button
             color="primary"
             onClick={() => {
-              // Dispatch action to add company to favorites
               dispatch({ type: "ADD_TO_PREF", payload: params.company });
             }}
           >
