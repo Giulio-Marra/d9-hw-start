@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Job from "./Job";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { favoriteCompanyAction } from "../redux/actions";
 
 const CompanySearchResults = () => {
   const [jobs, setJobs] = useState([]);
@@ -38,7 +39,7 @@ const CompanySearchResults = () => {
           <Button
             color="primary"
             onClick={() => {
-              dispatch({ type: "ADD_TO_PREF", payload: params.company });
+              dispatch(favoriteCompanyAction(params.company));
             }}
           >
             ADD TO PREF
